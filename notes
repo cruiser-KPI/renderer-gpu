@@ -1,0 +1,44 @@
+
+TODOs:
++ loading camera, geometry, transforms from xml file
++ tiles for optix renderer
++ logging and stats
++ refactorings
++ scene file editing
++ add materials and path tracing
++ direct lightning
++ finish with environment textures
+- blender plugin
+- more lights and materials
+- cleaning, easy gui managements
+- saving rendered image to file
+- obj material loading
+
+Blender plugin goals:
+- scene loading (geometry, camera, lights)
+- easy material specification
+- simple geometry and texture transfer
+
+Blender plugin to-dos:
+- research LuxCore and Mitsuba implementations of Blender plugins
+    - how to render preview window
+        - find out how to handle inter-process communication the easiest way with Python
+        - how to refresh scene while process is running
+- material preview window
+
+
++ loading only components that needs update (caching everything), deleting unnecessary
++ destroy all resources properly
++ make all pools singletons
++ texture pool and image cache
++ finish geometry pool
++ test all components with all possible inputs
+- texture scale
++ single time start of renderer from Blender
++ proper default scene loading from Blender
+- cycles material support
+
+-------------------------------------------------------------------------------------------
+USAGE TIPS:
+-------------------------------------------------------------------------------------------
+

@@ -1,0 +1,81 @@
+<root>
+    <scene>
+        <geometry_data>
+            <shape type="mesh" name="Sphere_mesh">
+                <filename>../resources/models/earth.obj</filename>
+            </shape>
+            <shape type="mesh" name="Mitsuba_plane_mesh">
+                <filename>../resources/models/mitsuba-plane.obj</filename>
+            </shape>
+            <shape type="torus" name="Torus"/>
+        </geometry_data>
+
+        <material_data>
+            <material type="diffuse" name="diffuse_0.5">
+                <albedo>0.5 0.5 0.5</albedo>
+            </material>
+            <material type="diffuse" name="diffuse_0.5_textured">
+                <albedo>0.5 0.5 0.5</albedo>
+                <texture name="checkerboard">
+                    <scale>1.0</scale>
+                </texture>
+            </material>
+        </material_data>
+
+        <primitive_data>
+            <primitive name="Sphere">
+                <shape name="Sphere_mesh"/>
+                <material name="diffuse_0.5"/>
+                <transform>
+                    <scale>0.003 0.003 0.003</scale>
+                    <translate>0.0 1.0 0.0</translate>
+                </transform>
+            </primitive>
+
+            <primitive name="Plane">
+                <shape name="Mitsuba_plane_mesh"/>
+                <material name="diffuse_0.5_textured"/>
+                <transform>
+                    <scale>1.5 1.5 1.5</scale>
+                </transform>
+            </primitive>
+
+            <primitive name="Torus">
+                <shape name="Torus"/>
+                <material name="diffuse_0.5"/>
+                <transform>
+                    <translate>0.0 4.0 0.0</translate>
+                    <scale>1.5 1.5 1.5</scale>
+                </transform>
+            </primitive>
+        </primitive_data>
+
+        <light_data>
+            <light type="directional" name="Sun light">
+                <direction>0.58 0.29 0.75</direction>
+                <color>1.0 1.0 1.0</color>
+            </light>
+
+            <light type="environment">
+                <texture name="nature"/>
+            </light>
+        </light_data>
+
+        <texture_data>
+            <texture name="nature">
+                <filename>../resources/textures/nature.png</filename>
+            </texture>
+            <texture name="checkerboard">
+                <filename>../resources/textures/checkerboard.jpg</filename>
+            </texture>
+        </texture_data>
+
+        <camera>
+            <center>0.0 0.0 0.0</center>
+            <distance>20.0</distance>
+        </camera>
+
+
+    </scene>
+
+</root>
