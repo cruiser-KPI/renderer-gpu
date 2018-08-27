@@ -29,7 +29,7 @@ int nextPower2(int value)
 
 bool Image::load(const std::string &filename)
 {
-    stbi_ldr_to_hdr_gamma(1.0f);
+    stbi_ldr_to_hdr_gamma(2.2f);
 
     float *data = stbi_loadf(filename.c_str(), &m_width, &m_height, nullptr, 4);
     if (!data){

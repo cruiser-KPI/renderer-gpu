@@ -85,8 +85,11 @@ bool PrimitivePool::loadPrimitive(const pugi::xml_node &node, const std::string 
 
             data.instance->setMaterialCount(1);
             data.instance->setMaterial(0, data.material);
-            data.instance["materialIndex"]->setInt(materialIndex);
+            data.instance["materialIndex"]->setInt(-1);
         }
+        int oldMaterialIndex = data.instance["materialIndex"]->getInt();
+        if (oldMaterialIndex != materialIndex)
+            data.instance["materialIndex"]->setInt(materialIndex);
 
         if (!data.geometryGroup)
             data.geometryGroup = m_context->createGeometryGroup();

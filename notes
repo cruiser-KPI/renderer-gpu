@@ -30,13 +30,9 @@ Blender plugin to-dos:
 + loading only components that needs update (caching everything), deleting unnecessary
 + destroy all resources properly
 + make all pools singletons
-+ texture pool and image cache
-+ finish geometry pool
 + test all components with all possible inputs
-- texture scale
-+ single time start of renderer from Blender
-+ proper default scene loading from Blender
-- cycles material support
++ texture scale
+
 
 -------------------------------------------------------------------------------------------
 USAGE TIPS:

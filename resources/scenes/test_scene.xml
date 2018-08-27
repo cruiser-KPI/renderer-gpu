@@ -12,13 +12,18 @@
 
         <material_data>
             <material type="diffuse" name="diffuse_0.5">
-                <albedo>0.5 0.5 0.5</albedo>
+                <albedo>
+                    <values>0.5 0.5 0.5</values>
+                </albedo>
             </material>
             <material type="diffuse" name="diffuse_0.5_textured">
-                <albedo>0.5 0.5 0.5</albedo>
-                <texture name="checkerboard">
-                    <scale>1.0</scale>
-                </texture>
+                <albedo>
+                    <values>0.5 0.5 0.5</values>
+                    <texture name="checkerboard">
+                        <scale>1.0</scale>
+                    </texture>
+                </albedo>
+
             </material>
         </material_data>
 

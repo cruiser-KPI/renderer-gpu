@@ -82,9 +82,10 @@ void MaterialPool::load(const pugi::xml_node &node)
             matData.indexBSDF = m_materialIndices["diffuse"];
         }
 
-        matData.albedo = readVector3(material_node.child("albedo"));
+        auto albedo_node = material_node.child("albedo");
+        matData.albedo = readVector3(albedo_node.child("values"), optix::make_float3(1.0f));
         matData.textureID = TexturePool::getInstance(m_context).id(
-            material_node.child("texture"), matData.textureScale);
+            albedo_node.child("texture"), matData.textureScale);
         matData.flags = FLAG_THINWALLED;
 
         m_materialMap[name] = matData;
