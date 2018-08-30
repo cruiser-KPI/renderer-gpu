@@ -138,6 +138,7 @@ void Camera::load(const pugi::xml_node &node)
     m_phi = readFloat(node.child("phi"), m_phi);
     m_theta = readFloat(node.child("theta"), m_theta);
     m_center = readVector3(node.child("center"), m_center);
+    m_fov = readFloat(node.child("fov"), m_fov);
     m_changed = true;
 
     update();
@@ -234,18 +235,17 @@ bool Camera::update()
         const float cosTheta = cosf(m_theta * M_PIf);
         const float sinTheta = sinf(m_theta * M_PIf);
 
+        // "normal", unit vector from origin to spherical coordinates (phi, theta)
         optix::float3 normal = optix::make_float3(cosPhi * sinTheta,
                                                   -cosTheta,
-                                                  -sinPhi
-                                                      * sinTheta); // "normal", unit vector from origin to spherical coordinates (phi, theta)
+                                                  -sinPhi * sinTheta);
 
         float tanFov = tanf((m_fov * 0.5f) * M_PIf / 180.0f); // m_fov is in the range [1.0f, 179.0f].
         m_cameraPosition = m_center + m_distance * normal;
 
         m_cameraU = m_aspect * optix::make_float3(-sinPhi, 0.0f, -cosPhi) * tanFov;               // "tangent"
         m_cameraV = optix::make_float3(cosTheta * cosPhi, sinTheta, cosTheta * -sinPhi) * tanFov; // "bitangent"
-        m_cameraW =
-            -normal;                                                                   // "-normal" to look at the center.
+        m_cameraW = -normal; // "-normal" to look at the center.
 
         try {
             m_context["sysCameraPosition"]->setFloat(m_cameraPosition);

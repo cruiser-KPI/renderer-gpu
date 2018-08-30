@@ -59,15 +59,35 @@ optix::float3 readVector3(const pugi::xml_node &node, optix::float3 def)
 
 optix::Matrix4x4 readTransform(const pugi::xml_node &node)
 {
-    optix::float3 scale = readVector3(node.child("scale"), optix::make_float3(1.0f));
-    optix::float3 translate = readVector3(node.child("translate"));
+    auto values_node = node.child("values");
+    if (values_node){
+        std::vector<float> v;
 
-    float transformMatrixData[16] =
-        {
-            scale.x, 0.0f, 0.0f, translate.x,
-            0.0f, scale.y, 0.0f, translate.y,
-            0.0f, 0.0f, scale.z, translate.z,
-            0.0f, 0.0f, 0.0f, 1.0f
-        };
-    return optix::Matrix4x4(transformMatrixData);
+        // Build an istream that holds the input string
+        std::istringstream iss(values_node.child_value());
+
+        // Iterate over the istream, using >> to grab floats
+        // and push_back to store them in the vector
+        std::copy(std::istream_iterator<float>(iss),
+                  std::istream_iterator<float>(),
+                  std::back_inserter(v));
+
+        if (v.size() != 16)
+            return optix::Matrix4x4();
+
+        return optix::Matrix4x4(v.data());
+    }
+    else {
+        optix::float3 scale = readVector3(node.child("scale"), optix::make_float3(1.0f));
+        optix::float3 translate = readVector3(node.child("translate"));
+
+        float transformMatrixData[16] =
+            {
+                scale.x, 0.0f, 0.0f, translate.x,
+                0.0f, scale.y, 0.0f, translate.y,
+                0.0f, 0.0f, scale.z, translate.z,
+                0.0f, 0.0f, 0.0f, 1.0f
+            };
+        return optix::Matrix4x4(transformMatrixData);
+    }
 }

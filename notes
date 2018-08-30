@@ -1,40 +1,64 @@
 
-TODOs:
-+ loading camera, geometry, transforms from xml file
-+ tiles for optix renderer
-+ logging and stats
-+ refactorings
-+ scene file editing
-+ add materials and path tracing
-+ direct lightning
-+ finish with environment textures
-- blender plugin
-- more lights and materials
-- cleaning, easy gui managements
-- saving rendered image to file
-- obj material loading
+TASKS:
+---
 
-Blender plugin goals:
-- scene loading (geometry, camera, lights)
-- easy material specification
-- simple geometry and texture transfer
+Goals:
+- PBR rendering of static surfaces
+- clean code
 
-Blender plugin to-dos:
-- research LuxCore and Mitsuba implementations of Blender plugins
-    - how to render preview window
-        - find out how to handle inter-process communication the easiest way with Python
-        - how to refresh scene while process is running
-- material preview window
+General TODOs:
+- [x] basic OptiX path tracer (10 days)
+    - [x] research OptiX examples
+    - [x] rendering tiles
+    - [x] all shaders
+- [x] interactive scene loading (5 days)
+    - [x] singleton for each scene data object type (camera, geometry, light, etc.)
+    - [x] load scene data from xml file
+    - [x] interactive reloading of scene data (using caches for everything and deleting unused stuff)
+    - [x] destroy all resources properly
+    - [x] test on different inputs
+- [x] viewer with camera rotation (3 days)
+- [x] renderer features
+    - [x] loading meshes (Assimp)
+    - [x] loading and saving image to file (stb_image)
+    - [x] direct lightning with MIS
+    - [x] image textures and environment maps
+    - [ ] all materials from PBRT and BRDF explorer
+    - [ ] area lights
+    - [ ] transparency and proper shadows
+    - [ ] bump mapping
+    - [ ] MIS env maps
+    - [ ] instancing
+    - [ ] samplers
+    - [ ] tone mapping
+    - [ ] dof
+- [ ] utils (2 days)
+    - [x] logging and stats
+    - [ ] math
+        - [ ] basic types (vector, matrix, etc.)
+        - [ ] basic calculations (probability theory, calculus)
+- [ ] cleaning
+    - [ ] general architecture and file organization
+    - [ ] dependencies and CMake file
+    - [ ] cleanup shaders
+    - [ ] OptiX textures understanding
+- [ ] optional
+    - [ ] subsurface scattering and volume rendering
+    - [ ] performance improvements
+    - [ ] proper testing
+    - [ ] fluid rendering
+    - [ ] analytic shapes
+    - [ ] curves and hair rendering
+    - [ ] procedural textures
+    - [ ] procedural sky
+    - [ ] filtering of resulting image
 
 
-+ loading only components that needs update (caching everything), deleting unnecessary
-+ destroy all resources properly
-+ make all pools singletons
-+ test all components with all possible inputs
-+ texture scale
 
-
--------------------------------------------------------------------------------------------
-USAGE TIPS:
--------------------------------------------------------------------------------------------
-
+Current TODOs:
+- [ ] global renderer settings
+- [ ] math helpers
+- [ ] proper world up axis (to be able to load from Blender)
+- [ ] add as much materials as possible
+- [ ] add as much lights as possible
+- [ ] get rid of gui elements
