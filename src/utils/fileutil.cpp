@@ -1,5 +1,8 @@
 
 #include "fileutil.h"
+#include "../core/globalsettings.h"
+#include "log.h"
+
 #include <sstream>
 
 std::string readString(const pugi::xml_node &node, std::string def)
@@ -59,6 +62,9 @@ optix::float3 readVector3(const pugi::xml_node &node, optix::float3 def)
 
 optix::Matrix4x4 readTransform(const pugi::xml_node &node)
 {
+
+    if (GlobalSettings::getInstance().worldForwardAxis != 2)
+        LogInfo("Transforming %d axis to forward z axis", GlobalSettings::getInstance().worldForwardAxis);
     auto values_node = node.child("values");
     if (values_node){
         std::vector<float> v;

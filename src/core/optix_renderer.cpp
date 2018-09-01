@@ -1,6 +1,7 @@
 
 #include "optix_renderer.h"
 #include "scene.h"
+#include "globalsettings.h"
 #include "../utils/log.h"
 #include "../utils/stats.h"
 
@@ -28,6 +29,8 @@ void OptixRenderer::load(const char *sceneFile)
     auto root = doc.child("root");
     if (!root)
         throw std::runtime_error(string_format("Invalid data in scene file"));
+
+    GlobalSettings::getInstance().load(root.child("settings"));
     Scene::getInstance().load(root.child("scene"));
 
     LogInfo("Scene file '%s' was successfully loaded", sceneFile);

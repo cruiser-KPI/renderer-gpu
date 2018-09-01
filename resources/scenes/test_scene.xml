@@ -62,7 +62,10 @@
             </light>
 
             <light type="environment">
-                <texture name="nature"/>
+                <values>10.0 10.0 10.0</values>
+                <color>
+                    <texture name="nature"/>
+                </color>
             </light>
         </light_data>
 

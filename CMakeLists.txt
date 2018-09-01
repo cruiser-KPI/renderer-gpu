@@ -87,7 +87,7 @@ set(RENDERER_SOURCE_FILES
         src/utils/fileutil.h
         src/utils/fileutil.cpp
         src/utils/stats.h
-        src/utils/stats.cpp src/core/materialpool.h src/core/materialpool.cpp src/core/materialdata.h src/core/geometrypool.h src/core/geometrypool.cpp src/core/lightpool.h src/core/lightpool.cpp src/core/lightdata.h src/core/flags.h src/core/image.h src/core/image.cpp src/core/texture.h src/core/texture.cpp src/core/optix_renderer.h src/core/optix_renderer.cpp)
+        src/utils/stats.cpp src/core/materialpool.h src/core/materialpool.cpp src/core/materialdata.h src/core/geometrypool.h src/core/geometrypool.cpp src/core/lightpool.h src/core/lightpool.cpp src/core/lightdata.h src/core/flags.h src/core/image.h src/core/image.cpp src/core/texture.h src/core/texture.cpp src/core/optix_renderer.h src/core/optix_renderer.cpp src/core/globalsettings.h src/core/globalsettings.cpp)
 
 
 add_library(CudaPTX OBJECT ${RENDERER_KERNELS})

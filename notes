@@ -56,7 +56,7 @@ General TODOs:
 
 
 Current TODOs:
-- [ ] global renderer settings
+- [x] global renderer settings
 - [ ] math helpers
 - [ ] proper world up axis (to be able to load from Blender)
 - [ ] add as much materials as possible
