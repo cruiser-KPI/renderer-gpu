@@ -31,15 +31,6 @@ RT_PROGRAM void miss_gradient()
     if (light.environmentTextureID != RT_TEXTURE_ID_NULL)
         texColor = make_float3(optix::rtTex2D<float4>(light.environmentTextureID, light.textureScale * u, light.textureScale * v));
 
-    //if (texColor.x < 0.0f || texColor.y < 0.0f)
-        //rtPrintf("(%.4f, %.4f, %.4f), u=%.4f, v=%.4f", texColor.x, texColor.y, texColor.z, u, v);
-//    if (texColor.x < 0.0f)
-//        texColor.x = 0.0f;
-//    if (texColor.y < 0.0f)
-//        texColor.y = 0.0f;
-//    if (texColor.z < 0.0f)
-//        texColor.z = 0.0f;
-
     const float weightMIS = (thePrd.flags & FLAG_DIFFUSE) ? powerHeuristic(thePrd.pdf, 0.25f * M_1_PIf) : 1.0f;
     thePrd.radiance = make_float3(weightMIS) * light.emission * texColor;
 

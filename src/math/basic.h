@@ -6,6 +6,7 @@
 
 #include <optix.h>
 #include <optixu/optixu_math_namespace.h>
+using namespace optix;
 
 // Explicitly not named Onb to not conflict with the optix::Onb
 // Tangent-Bitangent-Normal orthonormal space.
@@ -205,6 +206,73 @@ RT_FUNCTION float powerHeuristic(const float a, const float b)
 RT_FUNCTION float balanceHeuristic(const float a, const float b)
 {
     return a / (a + b);
+}
+
+RT_FUNCTION float evaluateFresnelDielectric(const float et, const float cosIn)
+{
+    const float cosi = fabsf(cosIn);
+
+    float sint = 1.0f - cosi * cosi;
+    sint = (0.0f < sint) ? sqrtf(sint) / et : 0.0f;
+
+    // Handle total internal reflection.
+    if (1.0f < sint)
+    {
+        return 1.0f;
+    }
+
+    float cost = 1.0f - sint * sint;
+    cost = (0.0f < cost) ? sqrtf(cost) : 0.0f;
+
+    const float et_cosi = et * cosi;
+    const float et_cost = et * cost;
+
+    const float rPerpendicular = (cosi - et_cost) / (cosi + et_cost);
+    const float rParallel      = (et_cosi - cost) / (et_cosi + cost);
+
+    const float result = (rParallel * rParallel + rPerpendicular * rPerpendicular) * 0.5f;
+
+    return (result <= 1.0f) ? result : 1.0f;
+}
+
+
+RT_FUNCTION void alignVector(float3 const& axis, float3& w)
+{
+    // Align w with axis.
+    const float s = copysign(1.0f, axis.z);
+    w.z *= s;
+    const float3 h = make_float3(axis.x, axis.y, axis.z + s);
+    const float  k = optix::dot(w, h) / (1.0f + fabsf(axis.z));
+    w = k * h - w;
+}
+
+RT_FUNCTION void unitSquareToCosineHemisphere(const float2 sample, float3 const& axis, float3& w, float& pdf)
+{
+    // Choose a point on the hemisphere about +z
+    const float theta = 2.0f * M_PIf * sample.x;
+    const float r = sqrtf(sample.y);
+    w.x = r * cosf(theta);
+    w.y = r * sinf(theta);
+    w.z = 1.0f - w.x * w.x - w.y * w.y;
+    w.z = (0.0f < w.z) ? sqrtf(w.z) : 0.0f;
+
+    pdf = w.z * M_1_PIf;
+
+    // Align with axis.
+    alignVector(axis, w);
+}
+
+RT_FUNCTION void unitSquareToSphere(const float u, const float v, float3& p, float& pdf)
+{
+    p.z = 1.0f - 2.0f * u;
+    float r = 1.0f - p.z * p.z;
+    r = (0.0f < r) ? sqrtf(r) : 0.0f;
+
+    const float phi = v * 2.0f * M_PIf;
+    p.x = r * cosf(phi);
+    p.y = r * sinf(phi);
+
+    pdf = 0.25f * M_1_PIf;  // == 1.0f / (4.0f * M_PIf)
 }
 
 #endif //RENDERER_GPU_BASIC_H

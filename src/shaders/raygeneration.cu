@@ -38,15 +38,13 @@ rtDeclareVariable(uint2, resolution, , );
 RT_FUNCTION void integrator(PerRayData& prd, float3& radiance)
 {
     radiance = make_float3(0.0f); // Start with black.
-
     float3 throughput = make_float3(1.0f); // The throughput for the next radiance, starts with 1.0f.
-
     int depth = 0; // Path segment index. Primary ray is 0.
 
     while (depth < sysPathLengths.y)
     {
-        prd.wo    = -prd.wi; // wi is the next path segment ray.direction. wo is the direction to the observer.
-        prd.flags = 0;       // Clear all non-persistent flags. None in this version.
+        prd.wo    = -prd.wi;
+        prd.flags = 0;
 
         // Note that the primary rays wouldn't need to offset the ray t_min by sysSceneEpsilon.
         optix::Ray ray = optix::make_Ray(prd.pos, prd.wi, 0, sysSceneEpsilon, RT_DEFAULT_MAX);
@@ -55,24 +53,22 @@ RT_FUNCTION void integrator(PerRayData& prd, float3& radiance)
         radiance += throughput * prd.radiance;
 
         // Path termination by miss shader or sample() routines.
-        // If terminate is true, f_over_pdf and pdf might be undefined.
         if ((prd.flags & FLAG_TERMINATE) || prd.pdf <= 0.0f || isNull(prd.f_over_pdf))
         {
             break;
         }
 
-        // PERF f_over_pdf already contains the proper throughput adjustment for diffuse materials: f * (fabsf(optix::dot(prd.wi, state.normal)) / prd.pdf);
         throughput *= prd.f_over_pdf;
 
         // Unbiased Russian Roulette path termination.
         if (sysPathLengths.x <= depth) // Start termination after a minimum number of bounces.
         {
             const float probability = fmaxf(throughput); // DAR Other options: // intensity(throughput); // fminf(0.5f, intensity(throughput));
-            if (probability < rng(prd.seed)) // Paths with lower probability to continue are terminated earlier.
+            if (probability < rng(prd.seed))
             {
                 break;
             }
-            throughput /= probability; // Path isn't terminated. Adjust the throughput so that the average is right again.
+            throughput /= probability;
         }
 
         ++depth; // Next path segment.
@@ -88,20 +84,16 @@ RT_PROGRAM void raygeneration()
     prd.seed = tea<8>(tileLaunchIndex.y * resolution.x + tileLaunchIndex.x, sysIterationIndex);
 
     const float2 pixel = make_float2(tileLaunchIndex);
-    // Sample the ray in the center of the pixel.
-    const float2 fragment = pixel + rng2(prd.seed); // Random jitter of the fragment location in this pixel.
-    // The launch dimension (set with rtContextLaunch) is the full client window in this demo's setup.
-    const float2 screen = make_float2(resolution);
+    const float2 fragment = pixel + rng2(prd.seed);
     // Normalized device coordinates in range [-1, 1].
+    const float2 screen = make_float2(resolution);
     const float2 ndc = (fragment / screen) * 2.0f - 1.0f;
 
-    // The integrator expects the next path segments ray.origin in prd.pos and the next ray.direction in prd.wi.
     prd.pos = sysCameraPosition;
     prd.wi  = optix::normalize(ndc.x * sysCameraU + ndc.y * sysCameraV + sysCameraW);
 
     float3 radiance;
-
-    integrator(prd, radiance); // In this case a unidirectional path tracer.
+    integrator(prd, radiance);
 
 #ifdef USE_DEBUG_EXCEPTIONS
     // DAR DEBUG Highlight numerical errors.
@@ -125,13 +117,13 @@ RT_PROGRAM void raygeneration()
     {
         if (0 < sysIterationIndex)
         {
+            // lerp sample with previously stored result
             float4 dst = sysOutputBuffer[tileLaunchIndex];  // RGBA32F
             sysOutputBuffer[tileLaunchIndex] = optix::lerp(dst, make_float4(radiance, 1.0f), 1.0f / (float) (sysIterationIndex + 1));
         }
         else
         {
-            // sysIterationIndex 0 will fill the buffer.
-            // If this isn't done separately, the result of the lerp() above is undefined, e.g. dst could be NaN.
+            // fill buffer with first sample
             sysOutputBuffer[tileLaunchIndex] = make_float4(radiance, 1.0f);
         }
     }

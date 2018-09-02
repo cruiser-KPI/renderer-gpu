@@ -81,9 +81,17 @@
         <camera>
             <center>0.0 0.0 0.0</center>
             <distance>20.0</distance>
+            <phi>0.75</phi>
+            <theta>1.0</theta>
         </camera>
 
 
     </scene>
+
+
+    <settings>
+        <forward_axis>2</forward_axis>
+
+    </settings>
 
 </root>

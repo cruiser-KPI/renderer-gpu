@@ -56,6 +56,33 @@ optix::float3 readVector3(const pugi::xml_node &node, optix::float3 def)
     if (v.size() != 3)
         return def;
 
+    if (GlobalSettings::getInstance().worldForwardAxis == 1)
+        return optix::make_float3(v[0], v[2], v[1]);
+    else
+        return optix::make_float3(v[0], v[1], v[2]);
+
+}
+
+optix::float3 readSpectrum(const pugi::xml_node &node, optix::float3 def)
+{
+    const char *str = node.child_value();
+    if (!str)
+        return def;
+
+    std::vector<float> v;
+
+    // Build an istream that holds the input string
+    std::istringstream iss(str);
+
+    // Iterate over the istream, using >> to grab floats
+    // and push_back to store them in the vector
+    std::copy(std::istream_iterator<float>(iss),
+              std::istream_iterator<float>(),
+              std::back_inserter(v));
+
+    if (v.size() != 3)
+        return def;
+
     return optix::make_float3(v[0], v[1], v[2]);
 
 }
@@ -63,8 +90,11 @@ optix::float3 readVector3(const pugi::xml_node &node, optix::float3 def)
 optix::Matrix4x4 readTransform(const pugi::xml_node &node)
 {
 
-    if (GlobalSettings::getInstance().worldForwardAxis != 2)
-        LogInfo("Transforming %d axis to forward z axis", GlobalSettings::getInstance().worldForwardAxis);
+    optix::Matrix4x4 correctionMatrix = optix::Matrix4x4::identity();
+//    if (GlobalSettings::getInstance().worldForwardAxis == 1)
+//        correctionMatrix = optix::Matrix4x4::rotate(-M_PI_2f, optix::make_float3(1.0f, 0.0f, 0.0f))*
+//            optix::Matrix4x4::scale(optix::make_float3(0.0f, 0.0f, -1.0f));
+
     auto values_node = node.child("values");
     if (values_node){
         std::vector<float> v;
@@ -81,7 +111,7 @@ optix::Matrix4x4 readTransform(const pugi::xml_node &node)
         if (v.size() != 16)
             return optix::Matrix4x4();
 
-        return optix::Matrix4x4(v.data());
+        return correctionMatrix * optix::Matrix4x4(v.data());
     }
     else {
         optix::float3 scale = readVector3(node.child("scale"), optix::make_float3(1.0f));

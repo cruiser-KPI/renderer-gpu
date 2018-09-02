@@ -83,10 +83,9 @@ void MaterialPool::load(const pugi::xml_node &node)
         }
 
         auto albedo_node = material_node.child("albedo");
-        matData.albedo = readVector3(albedo_node.child("values"), optix::make_float3(1.0f));
+        matData.albedo = readSpectrum(albedo_node.child("values"), optix::make_float3(1.0f));
         matData.textureID = TexturePool::getInstance(m_context).id(
             albedo_node.child("texture"), matData.textureScale);
-        matData.flags = FLAG_THINWALLED;
 
         m_materialMap[name] = matData;
         names.push_back(name);
@@ -203,7 +202,6 @@ void MaterialPool::setContext(optix::Context context)
             matData.indexBSDF = m_materialIndices["diffuse"];
             matData.albedo = optix::make_float3(0.0f);
             matData.textureID = RT_TEXTURE_ID_NULL;
-            matData.flags = FLAG_THINWALLED;
             m_materialMap["Default material"] = matData;
         }
         catch (optix::Exception &e) {

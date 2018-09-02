@@ -9,22 +9,8 @@
 #include "../math/basic.h"
 
 rtBuffer<LightDefinition> sysLightDefinitions;
-rtDeclareVariable(int,    sysNumLights, , ); // PERF Used many times and faster to read than sysLightDefinitions.size().
-
+rtDeclareVariable(int,    sysNumLights, , );
 rtDeclareVariable(float,  sysEnvironmentRotation, , );
-
-RT_FUNCTION void unitSquareToSphere(const float u, const float v, float3& p, float& pdf)
-{
-    p.z = 1.0f - 2.0f * u;
-    float r = 1.0f - p.z * p.z;
-    r = (0.0f < r) ? sqrtf(r) : 0.0f;
-
-    const float phi = v * 2.0f * M_PIf;
-    p.x = r * cosf(phi);
-    p.y = r * sinf(phi);
-
-    pdf = 0.25f * M_1_PIf;  // == 1.0f / (4.0f * M_PIf)
-}
 
 // Note that all light sampling routines return lightSample.direction and lightSample.distance in world space!
 

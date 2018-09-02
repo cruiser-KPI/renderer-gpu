@@ -38,13 +38,13 @@ void LightPool::load(const pugi::xml_node &node)
             light.position = readVector3(light_node.child("position"));
             light.direction = readVector3(light_node.child("direction"), optix::make_float3(0.0f, 1.0f, 0.0f));
             light.direction = optix::normalize(light.direction);
-            light.emission = readVector3(light_node.child("color").child("values"), optix::make_float3(1.0f, 1.0f, 1.0f));
+            light.emission = readSpectrum(light_node.child("color").child("values"), optix::make_float3(1.0f, 1.0f, 1.0f));
             light.environmentTextureID = RT_TEXTURE_ID_NULL;
         }
         else if (light_type == "environment") {
 
             LightDefinition &env_light = m_lightMap["Environment light"];
-            env_light.emission = readVector3(light_node.child("color").child("values"), optix::make_float3(1.0f, 1.0f, 1.0f));
+            env_light.emission = readSpectrum(light_node.child("color").child("values"), optix::make_float3(1.0f, 1.0f, 1.0f));
             env_light.environmentTextureID = TexturePool::getInstance(m_context).id(
                 light_node.child("color").child("texture"), env_light.textureScale);
             continue;
