@@ -2,7 +2,7 @@
 #ifndef RENDERER_GPU_FLAGS_H
 #define RENDERER_GPU_FLAGS_H
 
-#define FLAG_DIFFUSE        0x00000002
+#define FLAG_PATH           0x00000001
 #define FLAG_FRONTFACE      0x00000010
 #define FLAG_TERMINATE      0x80000000
 

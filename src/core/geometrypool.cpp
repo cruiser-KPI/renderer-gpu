@@ -37,7 +37,7 @@ bool loadGeometryFromFile(const std::string &filename, MeshData &meshData, bool 
     }
 
     Assimp::Importer importer;
-    const aiScene *scene = importer.ReadFile(filename, aiProcess_Triangulate | aiProcess_GenUVCoords);
+    const aiScene *scene = importer.ReadFile(filename, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
 
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
         LogError("Unable to load mesh '%s'. Error: ", filename.c_str(), importer.GetErrorString());
@@ -60,6 +60,8 @@ bool loadGeometryFromFile(const std::string &filename, MeshData &meshData, bool 
                 attrib.vertex = optix::make_float3(vertex.x, vertex.y, vertex.z);
                 aiVector3D normal = mesh->mNormals[face.mIndices[k]];
                 attrib.normal = optix::make_float3(normal.x, normal.y, normal.z);
+                aiVector3D tangent = mesh->mTangents[face.mIndices[k]];
+                attrib.tangent = optix::make_float3(tangent.x, tangent.y, tangent.z);
                 if (mesh->mTextureCoords[0]) {
                     aiVector3D texCoord = mesh->mTextureCoords[0][face.mIndices[k]];
                     attrib.texcoord = optix::make_float3(texCoord.x, texCoord.y, texCoord.z);

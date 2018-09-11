@@ -4,18 +4,29 @@
 
 #include <optixu/optixu_math_namespace.h>
 
+enum MaterialType
+{
+    DIFFUSE = 0,
+    GLOSSY = 1,
+    REFRACTION = 2,
+    GLASS = 3,
+    MIX = 4
+};
+
+
 struct MaterialParameter
 {
-    unsigned int indexBSDF;  // BSDF index to use in the closest hit program
-    optix::float3 albedo;     // Albedo, tint, throughput change for specular surfaces. Pick your meaning.
-    int textureID;
-    float textureScale;
-    optix::float3 absorption; // Absorption coefficient
-    float         ior;        // Index of refraction
-    unsigned int  flags;      // Thin-walled on/off
+    unsigned int indexBSDF = 0;  // BSDF index to use in the closest hit program
+    optix::float3 albedo;
+    float roughness = 0.0f;
+    float anisotropy = 0.0f;
+    float rotation = 0.0f;
+    int textureID = RT_TEXTURE_ID_NULL;
+    float textureScale = 1.0f;
+    float ior = 1.5f;
+    unsigned int flags = 0;
 
-    // Manual padding to 16-byte alignment goes here.
-    float unused1;
+    float unused0;
 };
 
 #endif //RENDERER_GPU_MATERIALDATA_H

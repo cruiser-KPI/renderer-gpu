@@ -95,6 +95,12 @@ RT_FUNCTION float intensity3(const optix::float4& rgb)
     return (rgb.x + rgb.y + rgb.z) * 0.3333333333f;
 }
 
+RT_FUNCTION float3 sqrt(const float3 &w)
+{
+    return make_float3(sqrtf(w.x), sqrtf(w.y), sqrtf(w.z));
+}
+
+
 RT_FUNCTION float cube(const float x)
 {
     return x * x * x;

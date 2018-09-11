@@ -13,6 +13,8 @@ struct State
     optix::float3 geoNormal;
     optix::float3 normal;
     optix::float3 texcoord;
+    optix::float3 tangent;
+    optix::float3 bitangent;
 };
 
 

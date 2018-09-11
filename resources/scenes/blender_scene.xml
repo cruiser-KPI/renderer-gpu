@@ -49,16 +49,15 @@
         </albedo>
                             
       </material>
-      <material name="Material" type="diffuse">
+      <material name="Material" type="glass">
         <albedo>
-          <texture name="/home/cruiser/Downloads/Kitchen_Blender/cushion-red.jpg"/>
+          <values>0.800000011920929 0.800000011920929 0.800000011920929</values>
         </albedo>
+        <roughness>0.5235294103622437</roughness>
+        <ior>1.4500000476837158</ior>
       </material>
     </material_data>
     <texture_data>
-      <texture name="/home/cruiser/Downloads/Kitchen_Blender/cushion-red.jpg">
-        <filename>/home/cruiser/Downloads/Kitchen_Blender/cushion-red.jpg</filename>
-      </texture>
       <texture name="checkerboard">
                         
         <filename>/home/cruiser/Projects/CMake/RendererGPU/resources/textures/checkerboard_small.jpg</filename>
@@ -77,9 +76,8 @@
       </light>
       <light type="environment">
         <color>
-          <values>0.947930634021759 0.8630443215370178 0.838043749332428</values>
+          <values>0.05087608844041824 0.05087608844041824 0.05087608844041824</values>
         </color>
-        <strength>1.0</strength>
       </light>
     </light_data>
     <camera>

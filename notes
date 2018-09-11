@@ -23,11 +23,11 @@ General TODOs:
     - [x] loading and saving image to file (stb_image)
     - [x] direct lightning with MIS
     - [x] image textures and environment maps
-    - [ ] all materials from PBRT and BRDF explorer
+    - [x] multiple materials support
+    - [ ] proper shadows for transparency
     - [ ] area lights
-    - [ ] transparency and proper shadows
     - [ ] bump mapping
-    - [ ] MIS env maps
+    - [ ] MIS env maps and exr env maps
     - [ ] instancing
     - [ ] samplers
     - [ ] tone mapping
@@ -43,6 +43,7 @@ General TODOs:
     - [ ] cleanup shaders
     - [ ] OptiX textures understanding
 - [ ] optional
+    - [ ] disney material
     - [ ] subsurface scattering and volume rendering
     - [ ] performance improvements
     - [ ] proper testing
@@ -58,6 +59,8 @@ General TODOs:
 Current TODOs:
 - [x] global renderer settings
 - [x] proper world forward axis (to be able to load from Blender)
-- [ ] add as much materials as possible
-- [ ] add as much lights as possible
+- [x] add as much materials as possible
+- [ ] proper shadows for transparency
+- [ ] point lights
+- [ ] area lights
 - [ ] get rid of gui elements

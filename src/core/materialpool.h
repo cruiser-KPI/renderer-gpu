@@ -12,12 +12,7 @@
 #include "materialdata.h"
 #include "texture.h"
 
-enum MaterialType
-{
-    DIFFUSE = 0,
-    SPECULAR = 1,
-    SPECULAR_TRANSIMISSION = 2
-};
+
 
 class MaterialPool
 {
@@ -37,6 +32,8 @@ private:
     MaterialPool() : m_context(nullptr), m_changed(true) {}
     void setContext(optix::Context context);
 
+    int loadMaterial(const pugi::xml_node &node, std::vector<std::string> &names,
+        const std::string &prefix = std::string());
     void updateMaterialBuffer();
 
     optix::Context m_context;

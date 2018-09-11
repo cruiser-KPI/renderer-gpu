@@ -11,10 +11,23 @@
         </geometry_data>
 
         <material_data>
-            <material type="diffuse" name="diffuse_0.5">
+            <material type="glass" name="glass_mat">
                 <albedo>
-                    <values>0.5 0.5 0.5</values>
+                    <values>1.0 1.0 1.0</values>
                 </albedo>
+            </material>
+            <material type="mix" name="mix_mat">
+                <material type="glossy" name="gloss">
+                    <albedo>
+                        <values>1 1 1</values>
+                    </albedo>
+                </material>
+                <material type="diffuse" name="diff">
+                    <albedo>
+                        <values>1 1 1</values>
+                    </albedo>
+                </material>
+                <factor>0.5</factor>
             </material>
             <material type="diffuse" name="diffuse_0.5_textured">
                 <albedo>
@@ -30,7 +43,7 @@
         <primitive_data>
             <primitive name="Sphere">
                 <shape name="Sphere_mesh"/>
-                <material name="diffuse_0.5"/>
+                <material name="mix_mat"/>
                 <transform>
                     <scale>0.003 0.003 0.003</scale>
                     <translate>0.0 1.0 0.0</translate>
@@ -47,7 +60,7 @@
 
             <primitive name="Torus">
                 <shape name="Torus"/>
-                <material name="diffuse_0.5"/>
+                <material name="glass_mat"/>
                 <transform>
                     <translate>0.0 4.0 0.0</translate>
                     <scale>1.5 1.5 1.5</scale>
@@ -62,8 +75,8 @@
             </light>
 
             <light type="environment">
-                <values>10.0 10.0 10.0</values>
                 <color>
+                    <values>1 1 1</values>
                     <texture name="nature"/>
                 </color>
             </light>
@@ -79,10 +92,10 @@
         </texture_data>
 
         <camera>
-            <center>0.0 0.0 0.0</center>
-            <distance>20.0</distance>
+            <center>0.0 1.0 0.0</center>
+            <distance>5.0</distance>
             <phi>0.75</phi>
-            <theta>1.0</theta>
+            <theta>0.5</theta>
         </camera>
 
 

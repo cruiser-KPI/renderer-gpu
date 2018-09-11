@@ -31,7 +31,7 @@ RT_PROGRAM void miss_gradient()
     if (light.environmentTextureID != RT_TEXTURE_ID_NULL)
         texColor = make_float3(optix::rtTex2D<float4>(light.environmentTextureID, light.textureScale * u, light.textureScale * v));
 
-    const float weightMIS = (thePrd.flags & FLAG_DIFFUSE) ? powerHeuristic(thePrd.pdf, 0.25f * M_1_PIf) : 1.0f;
+    float weightMIS = (thePrd.flags & FLAG_PATH) ? powerHeuristic(thePrd.pdf, 0.25f * M_1_PIf) : 1.f;
     thePrd.radiance = make_float3(weightMIS) * light.emission * texColor;
 
     //TODO proper importance sampling of environment light source
