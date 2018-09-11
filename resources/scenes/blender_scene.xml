@@ -2,95 +2,58 @@
 <root>
   <scene>
     <primitive_data>
-      <primitive name="Plane">
-        <shape name="Mitsuba_plane_mesh"/>
-        <material name="diffuse_0.2_textured"/>
-        <transform>
-                              
-          <translate>0.5 0.0 22.0</translate>
-                              
-          <scale>10.0 10.0 10.0</scale>
-                          
-        </transform>
-      </primitive>
-      <primitive name="Sphere">
-        <shape name="Sphere_mesh"/>
+      <primitive>
+        <shape name="Cube"/>
         <material name="Material"/>
         <transform>
-                              
-          <scale>3.3 3.3 3.3</scale>
-                              
-          <translate>0.0 5.0 0.0</translate>
-                          
+          <values>1.0000 0.0000 0.0000 2.0999 0.0000 1.0000 0.0000 0.0000 0.0000 0.0000 1.0000 1.4699 0.0000 0.0000 0.0000 1.0000 </values>
         </transform>
       </primitive>
     </primitive_data>
     <geometry_data>
-      <shape name="Mitsuba_plane_mesh" type="mesh">
-                                
-        <filename>/home/cruiser/Projects/CMake/RendererGPU/resources/models/mitsuba-plane.obj</filename>
-                            
+      <shape name="Cube" type="mesh">
+        <filename>/home/cruiser/Projects/CMake/RendererGPU/resources/models/model_Cube.ply</filename>
       </shape>
-      <shape name="Sphere_mesh" type="sphere"/>
     </geometry_data>
     <material_data>
-      <material name="diffuse_0.2_textured" type="diffuse">
-                                
+      <material name="Material" type="diffuse">
         <albedo>
-                                      
-          <values>0.2 0.2 0.2</values>
-                                      
-          <texture name="checkerboard">
-                                            
-            <scale>10.0</scale>
-                                        
-          </texture>
-                                  
+          <texture name="//cushion-red.jpg"/>
         </albedo>
-                            
-      </material>
-      <material name="Material" type="glass">
-        <albedo>
-          <values>0.800000011920929 0.800000011920929 0.800000011920929</values>
-        </albedo>
-        <roughness>0.5235294103622437</roughness>
-        <ior>1.4500000476837158</ior>
       </material>
     </material_data>
     <texture_data>
-      <texture name="checkerboard">
-                        
-        <filename>/home/cruiser/Projects/CMake/RendererGPU/resources/textures/checkerboard_small.jpg</filename>
-                        
-        <mipCount>10</mipCount>
-                    
+      <texture name="//cushion-red.jpg">
+        <filename>/home/cruiser/Downloads/Kitchen_Blender/cushion-red.jpg</filename>
+      </texture>
+      <texture name="//Tea-Towel.jpg">
+        <filename>/home/cruiser/Downloads/Kitchen_Blender/Tea-Towel.jpg</filename>
       </texture>
     </texture_data>
     <light_data>
-      <light name="Sun light" type="directional">
-                        
-        <direction>0.58 0.29 0.75</direction>
-                        
-        <color>1.0 1.0 1.0</color>
-                    
+      <light type="directional">
+        <position>4.076245307922363 1.0054539442062378 5.903861999511719</position>
+        <direction>-0.17255279721341735 -0.9785954912212649 -0.11214453502171447</direction>
+        <color>
+          <values>1.0 1.0 1.0</values>
+        </color>
       </light>
       <light type="environment">
         <color>
-          <values>0.05087608844041824 0.05087608844041824 0.05087608844041824</values>
+          <texture name="//Tea-Towel.jpg"/>
         </color>
+        <strength>1.0</strength>
       </light>
     </light_data>
     <camera>
-                      
-      <center>0.0 5.0 0.0</center>
-                      
-      <theta>0.47</theta>
-                      
-      <phi>0.743</phi>
-                      
-      <distance>7.5</distance>
-                  
+      <theta>0.64689280439769</theta>
+      <phi>0.12030015284004618</phi>
+      <distance>5</distance>
+      <center>6.8295733293354495 -5.893469507975224 4.89839371319579</center>
+      <fov>49.13434264120263</fov>
     </camera>
   </scene>
-  <settings/>
+  <settings>
+    <forward_axis>1</forward_axis>
+  </settings>
 </root>

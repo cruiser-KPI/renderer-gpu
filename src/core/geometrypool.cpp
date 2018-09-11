@@ -48,6 +48,8 @@ bool loadGeometryFromFile(const std::string &filename, MeshData &meshData, bool 
     for (int meshNum = 0; meshNum < scene->mNumMeshes; meshNum++) {
         aiMesh *mesh = scene->mMeshes[meshNum];
         size_t nTriangles = mesh->mNumFaces;
+        if (mesh->mTangents)
+            LogWarning("No tangents provided. Using planar texture mapping (on z axis). ");
 
         std::vector<VertexAttributes> attributes;
         attributes.reserve(nTriangles * 3);
@@ -60,8 +62,13 @@ bool loadGeometryFromFile(const std::string &filename, MeshData &meshData, bool 
                 attrib.vertex = optix::make_float3(vertex.x, vertex.y, vertex.z);
                 aiVector3D normal = mesh->mNormals[face.mIndices[k]];
                 attrib.normal = optix::make_float3(normal.x, normal.y, normal.z);
-                aiVector3D tangent = mesh->mTangents[face.mIndices[k]];
-                attrib.tangent = optix::make_float3(tangent.x, tangent.y, tangent.z);
+                if (mesh->mTangents) {
+                    aiVector3D tangent = mesh->mTangents[face.mIndices[k]];
+                    attrib.tangent = optix::make_float3(tangent.x, tangent.y, tangent.z);
+                }
+                else
+                    attrib.tangent = optix::make_float3(vertex.x, vertex.y, 0);
+
                 if (mesh->mTextureCoords[0]) {
                     aiVector3D texCoord = mesh->mTextureCoords[0][face.mIndices[k]];
                     attrib.texcoord = optix::make_float3(texCoord.x, texCoord.y, texCoord.z);

@@ -56,11 +56,11 @@ RT_PROGRAM void closest_hit()
 
         if (rng(thePrd.seed) < parameters.ior) {
             mixFactor = parameters.ior;
-            parameters = sysMaterialParameters[materialIndex + 1];
+            parameters = sysMaterialParameters[materialIndex + 2];
         }
         else {
             mixFactor = (1 - parameters.ior);
-            parameters = sysMaterialParameters[materialIndex + 2];
+            parameters = sysMaterialParameters[materialIndex + 1];
         }
     }
 

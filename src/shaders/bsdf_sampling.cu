@@ -126,7 +126,7 @@ RT_FUNCTION float3 fresnel_conductor(float cosThetaI, const float3 &etai,
 
 RT_FUNCTION void roughness_to_alpha(float r, float aniso, float *alphax, float *alphay)
 {
-    r = fmaxf(r*r, 1e-3f);
+    r = fmaxf(r, 1e-3f);
     aniso = clamp(aniso, -0.99f, 0.99f);
 
     if (aniso < 0.0) {

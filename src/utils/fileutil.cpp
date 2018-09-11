@@ -91,9 +91,9 @@ optix::Matrix4x4 readTransform(const pugi::xml_node &node)
 {
 
     optix::Matrix4x4 correctionMatrix = optix::Matrix4x4::identity();
-//    if (GlobalSettings::getInstance().worldForwardAxis == 1)
-//        correctionMatrix = optix::Matrix4x4::rotate(-M_PI_2f, optix::make_float3(1.0f, 0.0f, 0.0f))*
-//            optix::Matrix4x4::scale(optix::make_float3(0.0f, 0.0f, -1.0f));
+    if (GlobalSettings::getInstance().worldForwardAxis == 1)
+        correctionMatrix = optix::Matrix4x4::rotate(-M_PI_2f, optix::make_float3(1.0f, 0.0f, 0.0f))*
+            optix::Matrix4x4::scale(optix::make_float3(0.0f, 0.0f, 1.0f));
 
     auto values_node = node.child("values");
     if (values_node){
@@ -111,7 +111,7 @@ optix::Matrix4x4 readTransform(const pugi::xml_node &node)
         if (v.size() != 16)
             return optix::Matrix4x4();
 
-        return correctionMatrix * optix::Matrix4x4(v.data());
+        return  optix::Matrix4x4(v.data()) * correctionMatrix;
     }
     else {
         optix::float3 scale = readVector3(node.child("scale"), optix::make_float3(1.0f));

@@ -63,4 +63,5 @@ Current TODOs:
 - [ ] proper shadows for transparency
 - [ ] point lights
 - [ ] area lights
+- [ ] properly load blender data
 - [ ] get rid of gui elements
