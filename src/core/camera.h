@@ -10,7 +10,6 @@
 
 #include <map>
 
-
 enum CameraState
 {
     CAMERA_STATE_NONE,
